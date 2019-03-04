@@ -1,0 +1,26 @@
+@startuml
+title Lab 3 - Problem 3. Gabriel Briones (A01222517)
+actor Employee
+participant System
+database DDBB
+participant Printer
+Employee -> System: Creates letter
+System -> DDBB: query data
+alt Empty data?
+System -> Employee: dialogue box: request data
+Employee -> System: user input new data
+System -> DDBB: stores new data
+end
+System -> System: add current date
+System -> Employee: display text input
+Employee -> System: writes letter
+Employee -> System: saves letter
+System -> DDBB: save letter
+System -> Employee: dialogue box: print confirmation
+Employee -> System: answer 'yes'
+alt client says Yes
+System -> System: renders letter
+System -> Printer: sends rendered letter
+Printer -> Printer: prints
+end
+@enduml

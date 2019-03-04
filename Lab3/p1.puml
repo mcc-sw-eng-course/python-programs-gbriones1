@@ -1,0 +1,105 @@
+@startuml
+
+title Lab 3 - Problem 1. Gabriel Briones (A01222517)
+
+class Student {
+    - id: int {unique}
+    - tax_file_number: int {unique}
+    - name: str
+    - birthdate: Date
+    - sex: Sex
+    - year_of_study: YearOfStudy
+    - department: Department
+    - current_address: Address
+    - permanent_address: Address
+    + getGradeReport(course): GradeReport
+}
+
+class Date {
+    - day: int
+    - month: int
+    - year: int
+}
+
+class Address {
+    - number: int 
+    - street: str
+    - additional_info: str
+    - city: str
+    - state: str
+    - zip: str
+    - country: str
+    - phone: str
+}
+
+class Department {
+    - code: str {unique}
+    - name: str {unique}
+    - office_number: int
+    - office_phone: str
+    - faculty: str
+    + get_programs(): List<Program>
+}
+
+class Program {
+    - degree: str
+    - department: Department
+    + get_courses(): List<Course>
+}
+
+class Course{
+    - number: int
+    - name: str {unique}
+    - description: str
+    - hours: int
+    - level: int
+    - program: Program
+}
+
+class Section {
+    - instructor: Instructor
+    - semester: int
+    - year: int
+    - course: Course
+    - section_number: int
+}
+
+class Instructor{
+    - name: str
+}
+
+class GradeReport{
+    - student: Student
+    - section: Section
+    - letter_grade: LetterGrades
+    - percentage_mark: int [0..100]
+}
+
+enum LetterGrades{
+    HD
+    D
+    C
+    P
+}
+
+enum YearOfStudy {
+    First
+    Second
+    Third
+    PostGraduate
+}
+
+enum Sex {
+    MALE
+    FEMALE
+}
+
+Student "1" -down- "2" Address: has >
+Student "1" -down- "1" Department: Belongs >
+Department "1" -down- "*" Program: Offers >
+Program "1" -- "*" Course : has >
+Section "1"  -down- "1" Instructor: imparted by >
+Course "1" -- "1..*" Section : has <
+Student "1" -- "*" GradeReport: obtains >
+GradeReport "1" -- "1" Section: has >
+@enduml

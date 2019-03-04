@@ -1,0 +1,54 @@
+@startuml
+
+title Lab 3 - Problem 2. Gabriel Briones (A01222517)
+
+class Letter{
+    - body: str
+    - customer: Customer
+    - date: Date
+    - author: Correspondent
+}
+
+class Date{
+    - day: int
+    - month: int
+    - year: int
+    + getWeekDate(date)
+}
+
+class Correspondent{
+    - name: str
+    - address: IntAddress
+}
+
+class Customer{
+    - name: str
+    - status: int
+    - ini_rel: Date
+    - address: Address
+}
+
+class Address{
+    - street_name: str
+    - number: int
+    - city: str
+    - additional_info: str {optional}
+}
+
+class GAddress{
+    - city_code: str
+}
+class IntAddress{
+    - zip_address: str {optional}
+    - contry: str
+}
+
+Customer "1" -down- "1" Date: started on <
+Letter "1" -down- "1" Date: written on <
+Letter "0..*" -down- "1" Customer: destined to >
+Letter "0..*" -down- "1" Correspondent: written by >
+Customer "1" -down- "1" Address: has <
+Correspondent "1" -down- "1" Address: has <
+Address <|-- GAddress
+Address <|-- IntAddress
+@enduml
