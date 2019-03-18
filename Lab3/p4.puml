@@ -1,0 +1,42 @@
+@startuml
+
+title Lab 3 - Problem 4
+
+[*] --> Console: InitalState
+
+state "Console" as Console {
+    [*] --> EnterCode: InitalState
+    state EnterCode
+    EnterCode: [0..9, *, #]
+    state CheckCode
+    state ValidCode
+    state InvalidCode
+    state SoundAlarm
+    EnterCode --> CheckCode: InputReady
+    CheckCode --> ValidCode: Valid Code / openDoor
+    CheckCode --> InvalidCode: Invalid Code
+    ValidCode --> SoundAlarm: Valid Code / confirmationTone
+    InvalidCode --> SoundAlarm: Invalid Code / warningTone
+    ValidCode --> EnterCode: Time >= 30 sec
+    InvalidCode --> EnterCode: Time >= 3 sec
+}
+
+state "Door" as Door {
+    [*] -left-> Closed: InitalState
+    state Open
+    state Closed
+    state Opening
+    state Closing
+    state Blocked
+    Closed --> Opening: openDoor
+    Opening --> Open: fullyOpen
+    Open --> Closing: Time <= 30 sec
+    Closing --> Closed: fullyClosed
+    Closing --> Blocked: Time > 30 sec
+}
+
+
+ValidCode --> Opening: Valid Code / openDoor
+Blocked --> SoundAlarm: Blocked Door / alarmTone
+
+@enduml

@@ -1,6 +1,6 @@
 @startuml
 
-title Lab 3 - Problem 1. Gabriel Briones (A01222517)
+title Lab 3 - Problem 1
 
 class Student {
     - id: int {unique}
