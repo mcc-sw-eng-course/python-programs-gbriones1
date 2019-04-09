@@ -51,10 +51,9 @@ class TicTacToe(TurnBasedGridBoardGame):
             return True
         if not self.possible_movements():
             return True
+        return False
 
     def evaluate_winner(self):
-        if not self.possible_movements():
-            return None
         for x in range(self.board.x_size):
             if self.board.get_cell(x, 0).value == self.board.get_cell(x, 1).value == self.board.get_cell(x, 2).value != None:
                 return self.players[self.player_in_turn]
@@ -65,6 +64,8 @@ class TicTacToe(TurnBasedGridBoardGame):
             return self.players[self.player_in_turn]
         if self.board.get_cell(0, 2).value == self.board.get_cell(1, 1).value == self.board.get_cell(2, 0).value != None:
             return self.players[self.player_in_turn]
+        if not self.possible_movements():
+            return None
         return None
 
     def possible_movements(self):

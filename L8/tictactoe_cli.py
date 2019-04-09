@@ -1,4 +1,4 @@
-from tictactoe import TicTacToe, AIPlayer
+from tictactoe import TicTacToe, AIPlayer, HumanPlayer
 
 if __name__ == '__main__':
     tictactoe = TicTacToe(AIPlayer(), AIPlayer())
