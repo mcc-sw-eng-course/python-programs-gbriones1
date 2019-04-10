@@ -6,6 +6,36 @@ from checkers import Checkers, HumanPlayer, CheckersPlayer, AIPlayer
 
 class CheckersTest(unittest.TestCase):
 
+    def test_get_movement(self):
+        player1 = Player()
+        player2 = Player()
+        game = Checkers(player1, player2)
+        for cell in game.board.cells:
+            cell.value = None
+        game.board.set_cell(7,4,"x")
+        game.board.set_cell(6,3,"o")
+        game.board.set_cell(4,3,"o")
+        game.board.set_cell(2,3,"o")
+        game.board.set_cell(0,3,"o")
+        game.board.set_cell(6,5,"o")
+        game.board.set_cell(4,5,"o")
+        game.board.set_cell(2,5,"o")
+        game.board.set_cell(0,5,"o")
+        movements = list(game._get_movement(7,4,["LU", "RU"],["o", "O"]))
+        self.assertEqual([((1, 2), [(2, 3), (4, 3), (6, 3)]), ((1, 6), [(2, 5), (4, 3), (6, 3)]), ((1, 2), [(2, 3), (4, 5), (6, 5)]), ((1, 6), [(2, 5), (4, 5), (6, 5)])], movements)
+        game.board.set_cell(7,4,None)
+        game.board.set_cell(5,6,"X")
+        game.board.set_cell(6,1,"o")
+        game.board.set_cell(4,1,"o")
+        game.board.set_cell(2,1,"o")
+        game.board.set_cell(0,1,"o")
+        game.board.set_cell(6,7,"o")
+        game.board.set_cell(4,7,"o")
+        game.board.set_cell(2,7,"o")
+        game.board.set_cell(0,7,"o")
+        movements = list(game._get_movement(5,6,["LU", "RU", "LD", "RD"],["o", "O"]))
+        self.assertEqual([((1, 6), [(2, 5), (4, 3), (4, 1), (2, 1), (2, 3), (4, 5)]), ((7, 0), [(6, 1), (4, 1), (2, 1), (2, 3), (4, 5)]), ((5, 6), [(6, 5), (6, 3), (4, 1), (2, 1), (2, 3), (4, 5)]), ((1, 6), [(2, 5), (4, 5)]), ((7, 4), [(6, 5)])], movements)
+
     def test_evaluate_winner(self):
         player1 = Player()
         player2 = Player()
